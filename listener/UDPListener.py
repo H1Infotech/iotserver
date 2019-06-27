@@ -17,5 +17,12 @@ if __name__ == "__main__":
     print("The server is ready to receive")
     while True:
         message,clientAddress = udpServer.recvfrom(2800)
+
+        # async message to massage queue
         celery_queue.delay(clientAddress,message.hex())
-        # print('链接地址',clientAddress,message)
+
+        #TODO: 按照需求上位机因回复要接受多少条目数据
+        # replay message to client ()
+        udpServer.connect(clientAddress)
+        #udpServer.sendall()
+
